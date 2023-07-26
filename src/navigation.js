@@ -79,11 +79,37 @@ function categoriesPage () {
     sectionGenericList.classList.remove("inactive");
     sectionMovieDetail.classList.add("inactive");
 
-    const string = location.hash;
-    const array1 = string.split(",");
-    console.log(array1)
+    
+    const stringHash = location.hash;
+    const arrayHash = [...stringHash];
+    
+    
+    const arrayCategorias = arrayHash.map((string) => {
+            if (!isNaN(Number(string))) {
+                return Number(string)
+            } else {
+                return Number(string);
+            }
+    }).filter((numero) => !isNaN(numero)).join("")
+    console.log("ARRAY CATEGORIAS: ", arrayCategorias, typeof(arrayCategorias))
+    //const arrayCategorias2 = Number(arrayCategorias)
 
-    getMoviesByCategory(id);
+    
+    let newArray = [];
+    
+    for (let i = 10; i < arrayHash .length; i++) {
+        if (arrayHash [i] === "-") {
+            break;
+        }else {
+            newArray.push(arrayHash [i])
+        }
+    }
+    console.log("NEW ARRAY: ", newArray)
+    //const numeroCategoria = Number(newArray.join(""));
+    const numeroCategoria = newArray.join("");
+
+        
+    getMoviesByCategory(numeroCategoria);
 
 }
 
