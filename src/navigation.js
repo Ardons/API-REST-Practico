@@ -79,38 +79,29 @@ function categoriesPage () {
     sectionGenericList.classList.remove("inactive");
     sectionMovieDetail.classList.add("inactive");
 
-    
+    //Se guarda en variable el HASH
     const stringHash = location.hash;
     const arrayHash = [...stringHash];
     
-    
+    //Se crea la funcionalidad para extraer el numero de la categoria del HASH
     const arrayCategorias = arrayHash.map((string) => {
             if (!isNaN(Number(string))) {
                 return Number(string)
             } else {
                 return Number(string);
             }
-    }).filter((numero) => !isNaN(numero)).join("")
-    console.log("ARRAY CATEGORIAS: ", arrayCategorias, typeof(arrayCategorias))
-    //const arrayCategorias2 = Number(arrayCategorias)
+    }).filter((numero) => !isNaN(numero)).join("");    
+    //const arrayCategorias2 = Number(arrayCategorias);    
+    console.log("La Categoria escogida es: ", arrayCategorias)    
 
-    
-    let newArray = [];
-    
-    for (let i = 10; i < arrayHash .length; i++) {
-        if (arrayHash [i] === "-") {
-            break;
-        }else {
-            newArray.push(arrayHash [i])
-        }
-    }
-    console.log("NEW ARRAY: ", newArray)
-    //const numeroCategoria = Number(newArray.join(""));
-    const numeroCategoria = newArray.join("");
+    const [_, categoria] = location.hash.split("=");
+    const [idCategoria, nameCategory]= categoria.split("-")
 
-        
-    getMoviesByCategory(numeroCategoria);
 
+    headerCategoryView.innerHTML = nameCategory;
+    getMoviesByCategory(arrayCategorias);
+    //Esta funcion permite reiniciar el scroll
+    window.scrollTo(0,0);
 }
 
 function movieDEtailsPage () {

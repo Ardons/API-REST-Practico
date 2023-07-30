@@ -17,14 +17,30 @@ const api = axios.create({
 
 //Funciones--------------------------------------------------------------------------------------
 
+//Utils
+function createMovies(movies, container) {
+    container.innerHTML = "";
+    movies.forEach(movie => {
+        
+        const movieContainer = `
+            <div class="movie-container">
+                <img src="https://image.tmdb.org/t/p/w300${movie.poster_path}" class="movie-img" alt="${movie.original_title}" />
+            </div>
+            `
+            container.innerHTML += movieContainer;
+    })
+}
+
 
 async function getTrendingMoviesPreview() {
     const {data} = await api("trending/movie/day");
     
     const movies = data.results;
-    console.log("Informacion de las tarjetas" + { data }, { movies });
+    //console.log("Informacion de las tarjetas" + { data }, { movies });
+
+    createMovies(movies, trendingPreviewMovieList);
  
-    movies.forEach(movie => {
+   /* movies.forEach(movie => {
         
         const verificacion = document.getElementById(`${movie.id}`)
 
@@ -39,7 +55,7 @@ async function getTrendingMoviesPreview() {
             `
             trendingPreviewMovieList.innerHTML += movieContainer;
         }
-    })
+    })*/
 
 };
 
@@ -47,10 +63,9 @@ async function getTrendingMoviesPreview() {
 async function getCategoriesPreview() {
     const {data} = await api("genre/movie/list");
     
-    console.log("generos " + data);
-
+    //console.log("generos " + data);
     const generos = data.genres;
-    console.log({ data }, {generos});
+    console.log("Informacion generos" ,{ data }, {generos});
 
     //Limpio el contenedor para que no se sobre-escriba la informacion
     categoriesPreviewArticle.innerHTML = "";
@@ -63,6 +78,7 @@ async function getCategoriesPreview() {
             </div>
             `
         categoriesPreviewArticle.innerHTML += generoContainer;
+        
     });
 
     
@@ -80,23 +96,18 @@ async function getMoviesByCategory(id) {
     });
     
     const categoriaMovies = data.results;
-    console.log("Informacion de las tarjetas" + { data }, { categoriaMovies });
- 
-    /*movies.forEach(movie => {
-        
-        const verificacion = document.getElementById(`${movie.id}`)
+    console.log({ categoriaMovies });
 
-        if (verificacion) {
-            //console.log("Esta es la verificacion", !!verificacion)
-        } else {
-            const movieContainer = `
-            <div id="${movie.id}" class="movie-container">
-                <img src="https://image.tmdb.org/t/p/w300${movie.poster_path}" class="movie-img"
-                alt="${movie.original_title}" />
+    sectionGenericList.innerHTML = "";
+
+    categoriaMovies.forEach(movie => {
+        
+        const movieContainer = `
+            <div class="movie-container">
+                <img src="https://image.tmdb.org/t/p/w300${movie.poster_path}" class="movie-img" alt="${movie.original_title}" />
             </div>
             `
-            trendingPreviewMovieList.innerHTML += movieContainer;
-        }
-    })*/
+            sectionGenericList.innerHTML += movieContainer;
+    })
 
 };
