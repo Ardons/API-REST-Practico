@@ -1,4 +1,5 @@
-//Variables del DOM
+//Variables
+
 
 
 
@@ -6,13 +7,19 @@
 
 //Eventos de botones 
 searchFormBtn.addEventListener("click", () => {
-    location.hash = "search="
+    
+    location.hash = `search=${searchFormInput.value}`;
 });
+
 trendingBtn.addEventListener("click", () => {
     location.hash = "trends"
 });
+
+//Funcion para ir "atras"
 headerArrow.addEventListener("click", () => {
-    location.hash = "home"
+    history.back();
+
+    
 });
 
 
@@ -22,20 +29,24 @@ window.addEventListener("hashchange", navigator, false);
 
 //Funcion para evaluar en que HASH nos encontramos para ejecutar funciones determinadas
 function navigator () {
-    console.log({location});
-
+    //console.log({location});
+    
     if (location.hash.startsWith("#trends")) {
-        trebdsPage();
+        trebdsPage();       
     } else if (location.hash.startsWith("#search=")) {
-        searchPage();
+        searchPage();      
     } else if (location.hash.startsWith("#movie=")) {
-        movieDEtailsPage();
+        movieDetailsPage();
     } else if (location.hash.startsWith("#category=")) {
         categoriesPage();
-    } else {
-        homePage();
+    } else {       
+        homePage();  
     }
+
     
+
+    //Esta funcion permite reiniciar el scroll
+    window.scrollTo(0,0);
 }
 
 //Funciones para modificar el HTML segun en que HASH nos encontremos
@@ -43,7 +54,7 @@ function homePage () {
     console.log("HOME!!")
 
     headerSection.classList.remove("header-container--long");
-    headerSection.style.backgroun = "";
+    headerSection.style.background = "";
     headerArrow.classList.add("inactive");
     headerArrow.classList.remove("header-arrow--white");
     headerTitle.classList.remove("inactive");
@@ -66,7 +77,7 @@ function categoriesPage () {
     console.log("categories!!")
 
     headerSection.classList.remove("header-container--long");
-    headerSection.style.backgroun = "";
+    headerSection.style.background = "";
     headerArrow.classList.remove("inactive");
     headerArrow.classList.remove("header-arrow--white");
     headerTitle.classList.add("inactive");
@@ -92,7 +103,7 @@ function categoriesPage () {
             }
     }).filter((numero) => !isNaN(numero)).join("");    
     //const arrayCategorias2 = Number(arrayCategorias);    
-    console.log("La Categoria escogida es: ", arrayCategorias)    
+    //console.log("La Categoria escogida es: ", arrayCategorias)    
 
     const [_, categoria] = location.hash.split("=");
     const [idCategoria, nameCategory]= categoria.split("-")
@@ -100,14 +111,15 @@ function categoriesPage () {
 
     headerCategoryView.innerHTML = nameCategory;
     getMoviesByCategory(arrayCategorias);
-    //Esta funcion permite reiniciar el scroll
-    window.scrollTo(0,0);
+    
+    
 }
 
-function movieDEtailsPage () {
+function movieDetailsPage () {
     console.log("Movie!!")
 
     headerSection.classList.add("header-container--long");
+    console.log("MovieDetailsPage")
     //headerSection.style.backgroun = "";
     headerArrow.classList.remove("inactive");
     headerArrow.classList.add("header-arrow--white");
@@ -120,17 +132,26 @@ function movieDEtailsPage () {
 
     sectionGenericList.classList.add("inactive");
     sectionMovieDetail.classList.remove("inactive");
+
+    //sacar el id de la pelicula
+    const [_,idPelicula] = location.hash.split("=");
+
+
+    //agregar funciones
+    getDetalles(idPelicula);
+    getDetallesSimilares(idPelicula);
+    
 }
 
 function searchPage () {
     console.log("Search!!")
 
     headerSection.classList.remove("header-container--long");
-    headerSection.style.backgroun = "";
+    headerSection.style.background = "";
     headerArrow.classList.remove("inactive");
     headerArrow.classList.remove("header-arrow--white");
     headerTitle.classList.add("inactive");
-    headerCategoryView.classList.remove("inactive");
+    headerCategoryView.classList.add("inactive");
     searchForm.classList.remove("inactive");
 
     sectionTrending.classList.add("inactive");
@@ -139,13 +160,16 @@ function searchPage () {
     sectionGenericList.classList.remove("inactive");
     sectionMovieDetail.classList.add("inactive");
 
+    const [_, filtro] = location.hash.split("=");
+    getMoviesBySearch(filtro);
+
 }
 
 function trebdsPage () {
     console.log("TRENDS!!")
 
     headerSection.classList.remove("header-container--long");
-    headerSection.style.backgroun = "";
+    headerSection.style.background = "";
     headerArrow.classList.remove("inactive");
     headerArrow.classList.remove("header-arrow--white");
     headerTitle.classList.add("inactive");
@@ -157,5 +181,8 @@ function trebdsPage () {
 
     sectionGenericList.classList.remove("inactive");
     sectionMovieDetail.classList.add("inactive");
+
+    headerCategoryView.innerHTML = "Tendencias";
+    getTrendingMovies();
 }
 

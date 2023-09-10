@@ -19,11 +19,14 @@ const sectionGenericList= document.querySelector("#genericList");
 const sectionMovieDetail = document.querySelector("#movieDetail");
 const movieDetailCategoriesList = document.querySelector("#movieDetail .categories-list");
 const movieDetailrelatedMovies = document.querySelector(".relatedMovies-scrollContainer");
+const peliculasSimilares = document.querySelector(".relatedMovies-scrollContainer");
 
 //Elementos
 const headerTitle = document.querySelector(".header-title");
 const headerArrow = document.querySelector(".header-arrow");
 const headerCategoryView = document.querySelector(".header-title--categoryView");
+const headerLong = document.querySelector(".header-container--long");
+const headerConteiner = document.querySelector(".header-container");
 
 const searchFormInput = document.querySelector("#searchForm input");
 const searchFormBtn= document.querySelector("#searchBtn");
@@ -33,3 +36,6 @@ const trendingBtn = document.querySelector(".trendingPreview-btn");
 const movieDetailTitle = document.querySelector(".movieDetail-title");
 const movieDetailScore= document.querySelector(".movieDetail-score");
 const movieDetailDescription = document.querySelector(".movieDetail-description");
+
+
+const movieContainer2 = document.querySelector(".movie-container");
