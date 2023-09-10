@@ -39,10 +39,7 @@ function detallePelicula (id){
 }
 
 async function getDetalles(idPelicula) {
-    console.log("getDetalles");
-    const headerLong = document.querySelector(".header-container--long");
-
-
+    
     const {data} = await api(`movie/${idPelicula}`);
     console.log(data)
 
@@ -51,17 +48,22 @@ async function getDetalles(idPelicula) {
     movieDetailDescription.textContent = data.overview;
     movieDetailScore.textContent = data.vote_average.toPrecision(3);
 
-    //cambiar la imagen del poster principal
-    console.log(data.poster_path)
+    //cambiar la imagen del poster principal VERSION 1
+    /*console.log(data.poster_path)
+    const headerLong = document.querySelector(".header-container--long");
     headerSection.classList.add("header-container--long");
-    headerLong.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${data.poster_path}")`;
+    headerLong.style.backgroundImage = `url("https://image.tmdb.org/t/p/original${data.poster_path}")`;*/
     //headerConteiner.style.backgroundImage = `url("https://image.tmdb.org/t/p/w300${data.poster_path}")`;
-    
+
+    //cambiar la imagen del poster principal VERSION 2
+    headerSection.style.background = `
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35) 19.27%, rgba(0, 0, 0, 0) 29.17%),
+    url("https://image.tmdb.org/t/p/w500${data.poster_path}")`
 
     //se introducen los generos segun la pelicula
     const generos = data.genres;     
     createCategories(generos, movieDetailCategoriesList);
-    
+
 };
 
 async function getDetallesSimilares(idPelicula) {
